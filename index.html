@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif;
+  height:100vh;
+  overflow:hidden;
+  background:linear-gradient(270deg,#ff0080,#7928ca,#2afadf);
+  background-size:600% 600%;
+  animation:bg 15s ease infinite;
+  color:white;
+}
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.page{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:transform 1s ease,opacity 1s;
+}
+.hide{opacity:0;pointer-events:none}
+.card{
+  width:85%;
+  max-width:420px;
+  background:rgba(0,0,0,.4);
+  backdrop-filter:blur(12px);
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+.hand{font-family:'Dancing Script',cursive}
+button{
+  margin-top:20px;
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  background:#ff4d6d;
+  color:white;
+  font-size:16px;
+}
+.heart{
+  position:absolute;
+  bottom:-20px;
+  animation:float 7s linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-110vh);opacity:0}
+}
+
+/* card stack */
+.stack{
+  position:relative;
+  height:220px;
+}
+.stack div{
+  position:absolute;
+  width:100%;
+  padding:20px;
+  border-radius:15px;
+  background:white;
+  color:#333;
+  text-align:center;
+  font-size:15px;
+  box-shadow:0 15px 30px rgba(0,0,0,.3);
+}
+.stack div:nth-child(1){transform:rotate(-6deg)}
+.stack div:nth-child(2){transform:rotate(3deg)}
+.stack div:nth-child(3){transform:rotate(-2deg)}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop preload="auto">
+<source src="https://cdn.pixabay.com/audio/2023/05/25/audio_1e5c6b9c6a.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page" id="p1">
+  <div class="card">
+    <div style="font-size:50px">💖</div>
+    <h1 class="hand">Preparing Something Special</h1>
+    <p style="margin-top:10px">For someone very special...</p>
+    <button onclick="go2()">Tap to Continue</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page hide" id="p2">
+  <div class="card">
+    <h1 class="hand">Happy Birthday</h1>
+    <h3 style="margin:10px 0">To my favorite person,<br><b>my dear madam 💖</b></h3>
+    <p>May your day be filled with happiness, warmth, and countless reasons to smile.</p>
+    <button onclick="go3()">Open Messages</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page hide" id="p3">
+  <div class="card">
+    <div class="stack">
+      <div>You're Amazing ✨</div>
+      <div>You deserve all happiness 💛</div>
+      <div>Never stop smiling 🌸</div>
+    </div>
+    <button onclick="go4()">Open Special Letter</button>
+  </div>
+</div>
+<!-- PAGE 4 -->
+<div class="page hide" id="p4">
+  <div class="card">
+    <p style="text-align:left;font-size:14px">
+      <b>My Dearest Madam 💝😇,</b><br><br>
+      On this very special day, I want you to know how incredibly grateful I am to have you in my life.
+      Your birthday isn't just a celebration of another year – it's a celebration of all beautiful memories
+      you bring to this world.<br><br>
+      Thank you for being the wonderful, amazing, absolutely fantastic person that you are.
+      The world is so much brighter because you're in it.<br><br>
+      Happy Birthday my dear friend ✨🌸<br><br>
+      With all my love and warmest wishes,
+    </p>
+    <p class="hand" style="margin-top:15px;font-size:22px">
+      I wish you were always smiling 😊
+    </p>
+  </div>
+</div>
+
+<script>
+const music = document.getElementById("music");
+
+// Function to safely play music, considering browser autoplay policies
+function playMusicSafely() {
+  if (music && (music.paused || music.ended)) { // Ensure music element exists and isn't already playing
+    music.play().then(() => {
+      console.log("Music started playing successfully!");
+    }).catch(error => {
+      // Autoplay was prevented. This is common in modern browsers.
+      // You might want to log the error or provide a visual cue to the user.
+      console.warn("Music autoplay prevented:", error);
+      // You could add a message to the user here, e.g.:
+      // alert("Please enable media autoplay for this site to hear the music!");
+    });
+  }
+}
+
+// Function to hide current page and show next
+function show(a,b){
+ document.getElementById(a).classList.add("hide");
+ document.getElementById(b).classList.remove("hide");
+}
+
+// Only trigger music playback on the very first user interaction
+const go2 = () => {
+  show("p1","p2");
+  playMusicSafely(); // This is the crucial call for initial music playback
+};
+
+const go3 = () => {
+  show("p2","p3");
+  // Music should already be playing from go2, no need to re-trigger unless it somehow stopped.
+  // playMusicSafely(); // Uncomment if you want to retry playing on subsequent clicks
+};
+
+const go4 = () => {
+  show("p3","p4");
+  // Music should already be playing, no need to re-trigger.
+  // playMusicSafely(); // Uncomment if you want to retry playing on subsequent clicks
+};
+
+setInterval(()=>{
+ let h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="💖";
+ h.style.left=Math.random()*100+"vw";
+ h.style.fontSize=Math.random()*20+10+"px";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),7000);
+},300);
+</script>
+
+</body>
+</html>
